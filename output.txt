@@ -1,0 +1,68 @@
+####################################################################################
+Created Regulator A wallet with id: 0.0.1495
+Created Regulator B wallet with id: 0.0.1496
+Created FSP A wallet with id: 0.0.1497
+Created FSP B wallet with id: 0.0.1498
+Created End User A wallet with id: 0.0.1499
+Created End User B wallet with id: 0.0.1500
+####################################################################################
+####################################################################################
+Created new Token with ID: 0.0.1616
+Created new Token 2 with ID: 0.0.1617
+Created currency pair ENAIRA/ECEDIS
+####################################################################################
+################ Balance BEfore Transactions ##################
+BALANCE FOR FSP AThe balance for account: 0.0.1497 with tokenId: 0.0.1616 is 0
+BALANCE FOR FSP BThe balance for account: 0.0.1498 with tokenId: 0.0.1617 is 0
+BALANCE FOR End User AThe balance for account: 0.0.1499 with tokenId: 0.0.1616 is 0
+################ Balance BEfore Transactions ##################
+####################################################################################
+Transferred 1000000 from regulator A: 0.0.1495 to FSP A: 0.0.1497 on token: 0.0.1616
+Transferred 1000000 from regulator B: 0.0.1496 to FSP B: 0.0.1498 on token: 0.0.1616
+Transferred 10000 from FSP A: 0.0.1497 to END USER A: 0.0.1499 on token: 0.0.1616
+################ Balance BEfore Transactions ##################
+BALANCE FOR FSP AThe balance for account: 0.0.1497 with tokenId: 0.0.1616 is 990000
+BALANCE FOR FSP BThe balance for account: 0.0.1498 with tokenId: 0.0.1617 is 1000000
+BALANCE FOR End User AThe balance for account: 0.0.1499 with tokenId: 0.0.1616 is 10000
+################ Balance BEfore Transactions ##################
+####################################################################################
+############### USER A REQUESTS TO SEND 100 ECEDIS TO USER B #########################
+############### USER A RECEIVES RATE AS 20 #########################
+################ BALANCE OF END USER A AND FSP A BEFORE TRANSACTION BECAUSE FSP NEEDS TO TAKE ENAIRA TO START TRANSACTION ###############
+BALANCE FOR FSP AThe balance for account: 0.0.1497 with tokenId: 0.0.1616 is 990000
+BALANCE FOR END USER AThe balance for account: 0.0.1499 with tokenId: 0.0.1616 is 10000
+################ BALANCE OF END USER A AND FSP A BEFORE TRANSACTION BECAUSE FSP NEEDS TO TAKE ENAIRA TO START TRANSACTION ###############
+################ BALANCE OF END USER A AND FSP A AFTER TRANSACTION BECAUSE FSP NEEDS TO TAKE ENAIRA TO START TRANSACTION ###############
+BALANCE FOR FSP AThe balance for account: 0.0.1497 with tokenId: 0.0.1616 is 992000
+BALANCE FOR END USER AThe balance for account: 0.0.1499 with tokenId: 0.0.1616 is 8000
+################ BALANCE OF END USER A AND FSP A AFTER TRANSACTION BECAUSE FSP NEEDS TO TAKE ENAIRA TO START TRANSACTION ###############
+################ FSP A WILL CREATE A BUY ORDER WHICH SHOULD BE MATCHED IMMEDIATELY BECAUSE OF THE PoC ###############
+################ BALANCE OF FSP A AND FSP B BEFORE TRANSACTION ###############
+BALANCE FOR FSP A TOKEN 1The balance for account: 0.0.1497 with tokenId: 0.0.1616 is 992000
+BALANCE FOR FSP A TOKEN 2The balance for account: 0.0.1497 with tokenId: 0.0.1617 is 0
+BALANCE FOR FSP B TOKEN 1The balance for account: 0.0.1498 with tokenId: 0.0.1616 is 0
+BALANCE FOR FSP B TOKEN 2The balance for account: 0.0.1498 with tokenId: 0.0.1617 is 1000000
+################ BALANCE OF FSP A AND FSP B BEFORE TRANSACTION ###############
+################ BALANCE OF FSP A AND FSP B AFTER TRANSACTION ###############
+BALANCE FOR FSP A TOKEN 1The balance for account: 0.0.1497 with tokenId: 0.0.1616 is 990500
+BALANCE FOR FSP A TOKEN 2The balance for account: 0.0.1497 with tokenId: 0.0.1617 is 100
+BALANCE FOR FSP B TOKEN 1The balance for account: 0.0.1498 with tokenId: 0.0.1616 is 1500
+BALANCE FOR FSP B TOKEN 2The balance for account: 0.0.1498 with tokenId: 0.0.1617 is 999900
+################ BALANCE OF FSP A AND FSP B AFTER TRANSACTION ###############
+######### NOW AFTER GETTING TOKEN 2, FSP A CAN JUST EASILY FINISH THE FLOW BY SENDING TO END USER 2 ##################
+################ BALANCE OF END USER B AND FSP A BEFORE TRANSACTION ###############
+BALANCE FOR FSP AThe balance for account: 0.0.1497 with tokenId: 0.0.1617 is 100
+BALANCE FOR END USER BThe balance for account: 0.0.1500 with tokenId: 0.0.1617 is 0
+################ BALANCE OF END USER B AND FSP A BEFORE TRANSACTION ###############
+################ BALANCE OF END USER B AND FSP A BEFORE TRANSACTION ###############
+BALANCE FOR FSP AThe balance for account: 0.0.1497 with tokenId: 0.0.1617 is 0
+BALANCE FOR END USER BThe balance for account: 0.0.1500 with tokenId: 0.0.1617 is 100
+################ BALANCE OF END USER B AND FSP A BEFORE TRANSACTION ###############
+################ FINAL BALANCE ###############
+BALANCE FOR FSP A TOKEN 1The balance for account: 0.0.1497 with tokenId: 0.0.1616 is 990500
+BALANCE FOR FSP A TOKEN 2The balance for account: 0.0.1497 with tokenId: 0.0.1617 is 0
+BALANCE FOR FSP B TOKEN 1The balance for account: 0.0.1498 with tokenId: 0.0.1616 is 1500
+BALANCE FOR FSP B TOKEN 2The balance for account: 0.0.1498 with tokenId: 0.0.1617 is 999900
+BALANCE FOR END USER BThe balance for account: 0.0.1500 with tokenId: 0.0.1617 is 100
+BALANCE FOR END USER AThe balance for account: 0.0.1499 with tokenId: 0.0.1616 is 8000
+################ FINAL BALANCE ###############
