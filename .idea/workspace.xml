@@ -4,35 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a38867d2-8e01-4cea-8e26-aee36f3f2691" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hello.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ApproachOne.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/CurrencyPair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/CurrencyPairService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ExchangeRate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ExchangeRateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/HederaSDK.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/OrderMatchingService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Starter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TestApproach.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TestApproach2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/TestApproachOneWithFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/WalletService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/helper/FileOperations.java" afterDir="false" />
+    <list default="true" id="a38867d2-8e01-4cea-8e26-aee36f3f2691" name="Changes" comment="Merged">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/git_toolbox_prj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +90,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Rebasing main",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/khalifa/Downloads/Question1Java2023Q2",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
@@ -203,7 +180,19 @@
       <option name="presentableId" value="Default" />
       <updated>1692292464148</updated>
     </task>
+    <task id="LOCAL-00001" summary="Merged">
+      <created>1696951306239</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1696951306239</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merged" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merged" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
