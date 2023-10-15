@@ -49,45 +49,46 @@ public class TestApproach {
         return String.format("The balance for account: %s with tokenId: %s is %s", accountId.toString(), tokenId.toString(),balance.tokens.get(tokenId));
     }
 
+
+    private PrivateKey generateKey(){
+        PrivateKey privateKey = PrivateKey.generateED25519();
+        // save to file and retrieve also
+        return privateKey;
+    }
+
+    private AccountId createAccount(Client client, PrivateKey privateKey, int hbar, String accountFor) {
+
+        AccountId account = HederaSDK.createAccount(client, privateKey, hbar);
+        System.out.println(HederaSDK.getAccountBalance(this.client, this.regulator1));
+        System.out.println("Created " + accountFor + "wallet with id: " + this.regulator1.toString());
+        // save to file and retrieve also
+        return account;
+    }
+
     private void initializeWallets() {
 
-        this.privateKey1 = PrivateKey.generateED25519();
-        this.privateKey2 = PrivateKey.generateED25519();
-        this.privateKey3 = PrivateKey.generateED25519();
-        this.privateKey4 = PrivateKey.generateED25519();
-        this.privateKey5 = PrivateKey.generateED25519();
-        this.privateKey6 = PrivateKey.generateED25519();
-        this.crossborderPrivateKey = PrivateKey.generateED25519();
+        this.privateKey1 = generateKey();
+        this.privateKey2 = generateKey();
+        this.privateKey3 = generateKey();
+        this.privateKey4 = generateKey();
+        this.privateKey5 = generateKey();
+        this.privateKey6 = generateKey();
+        this.crossborderPrivateKey = generateKey();
 
-        this.client = HederaSDK.getClient(); // default hedera client
-        this.crossborderAccount = HederaSDK.createAccount(this.client, this.crossborderPrivateKey);
-        System.out.println(this.crossborderAccount.toString());
-        System.out.println(this.crossborderPrivateKey);
-        this.crossborderClient = HederaSDK.getDynamicClient(this.crossborderAccount, this.crossborderPrivateKey);
         System.out.println("####################################################################################");
-        this.regulator1 = HederaSDK.createAccount(this.client, privateKey1);
-        System.out.println(HederaSDK.getAccountBalance(this.client, this.regulator1));
-        System.out.println("Created Regulator A wallet with id: " + this.regulator1.toString());
-        this.regulator2 =  HederaSDK.createAccount(this.client, privateKey2);
-        System.out.println("Created Regulator B wallet with id: " + this.regulator2.toString());
+        this.client = HederaSDK.getClient(); // default hedera client
+        this.crossborderAccount = this.createAccount(this.client, this.crossborderPrivateKey, 10, "CrossBorder");
+        this.crossborderClient = HederaSDK.getDynamicClient(this.crossborderAccount, this.crossborderPrivateKey);
+        this.regulator1 = this.createAccount(this.client, privateKey1, 10, "Regulator A");
+        this.regulator2 =  this.createAccount(this.client, privateKey2, 10, "Regulator B");
         this.regulatorClient1 = HederaSDK.getDynamicClient(this.regulator1, this.privateKey1);
         this.regulatorClient2 = HederaSDK.getDynamicClient(this.regulator2, this.privateKey2);
-        this.fsp1 = HederaSDK.createAccountUser(this.regulatorClient1, privateKey3);
-        System.out.println("Created FSP A wallet with id: " + this.fsp1.toString());
-        this.fsp2 =  HederaSDK.createAccountUser(this.regulatorClient2, privateKey4);
-        System.out.println("Created FSP B wallet with id: " + this.fsp2.toString());
-        this.endUserWallet1 = HederaSDK.createAccountUser(this.regulatorClient1, privateKey5);
-        System.out.println("Created End User A wallet with id: " + this.endUserWallet1.toString());
-        this.endUserWallet2 = HederaSDK.createAccountUser(this.regulatorClient2, privateKey6);
-        System.out.println("Created End User B wallet with id: " + this.endUserWallet2.toString());
+        this.fsp1 = this.createAccount(this.regulatorClient1, privateKey3, 1, "FSP A");
+        this.fsp2 = this.createAccount(this.regulatorClient2, privateKey4, 1, "FSP B");
+        this.endUserWallet1 = this.createAccount(this.regulatorClient1, privateKey5, 1, "End User A");
+        this.endUserWallet2 = this.createAccount(this.regulatorClient2, privateKey6, 1, "End User B");
         System.out.println("####################################################################################");
 
-        System.out.println(this.privateKey1);
-        System.out.println(this.privateKey2);
-        System.out.println(this.privateKey3);
-        System.out.println(this.privateKey4);
-        System.out.println(this.privateKey5);
-        System.out.println(this.privateKey6);
     }
 
     private void initializeTokens() {
