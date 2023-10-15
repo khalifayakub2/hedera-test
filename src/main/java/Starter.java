@@ -16,8 +16,8 @@ public class Starter {
     public static void main(String[] args){
 
         final TestApproach approach = new TestApproach();
-        final TestApproach2 approach2 = new TestApproach2();
-        final TestApproachOneWithFile approach3 = new TestApproachOneWithFile();
+//        final TestApproach2 approach2 = new TestApproach2();
+//        final TestApproachOneWithFile approach3 = new TestApproachOneWithFile();
 
         approach.run();
 //          approach2.run();

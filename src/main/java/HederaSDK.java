@@ -15,17 +15,16 @@ public class HederaSDK {
 //        String host = "127.0.0.1";
 
         Client client = null;
-        try {
-            client = Client.forNetwork(Collections.singletonMap(host+":50211", AccountId.fromString("0.0.3")))
-    .setMirrorNetwork(List.of(host+":5600"));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-//        client = Client.forTestnet();
-        //        client = Client.forNetwork(Collections.singletonMap(host+":22505", AccountId.fromString("0.0.3")));
+//        try {
+//            client = Client.forNetwork(Collections.singletonMap(host+":50211", AccountId.fromString("0.0.3")))
+//    .setMirrorNetwork(List.of(host+":5600"));
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        client = Client.forTestnet();
 
-        client.setOperator(AccountId.fromString("0.0.2"), PrivateKey.fromString("302e020100300506032b65700422042091132178e72057a1d7528025956fe39b0b847f200ab59b2fdd367017f3087137"));
-//        client.setOperator(AccountId.fromString("0.0.433094"), PrivateKey.fromString("302e020100300506032b65700422042011b1c21f10aafebb2fcd2ded374cfe2559ad18ad1eb4b51c124905e71c2e58d3"));
+//        client.setOperator(AccountId.fromString("0.0.2"), PrivateKey.fromString("302e020100300506032b65700422042091132178e72057a1d7528025956fe39b0b847f200ab59b2fdd367017f3087137"));
+        client.setOperator(AccountId.fromString("0.0.433094"), PrivateKey.fromString("302e020100300506032b65700422042011b1c21f10aafebb2fcd2ded374cfe2559ad18ad1eb4b51c124905e71c2e58d3"));
         client.setMaxBackoff(Duration.ofMinutes(5));
         client.setMinBackoff(Duration.ofSeconds(15));
         return client;
@@ -36,13 +35,13 @@ public class HederaSDK {
 //        String host = "192.168.1.124";
 //        String host = "127.0.0.1";
         Client client = null;
-        try {
-            client = Client.forNetwork(Collections.singletonMap(host+":50211", AccountId.fromString("0.0.3")))
-            .setMirrorNetwork(List.of(host+":5600"));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-//        client = Client.forTestnet();
+//        try {
+//            client = Client.forNetwork(Collections.singletonMap(host+":50211", AccountId.fromString("0.0.3")))
+//            .setMirrorNetwork(List.of(host+":5600"));
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        client = Client.forTestnet();
         client.setOperator(accountId, privateKey);
         client.setMaxBackoff(Duration.ofMinutes(5));
         client.setMinBackoff(Duration.ofSeconds(15));
@@ -62,7 +61,6 @@ public class HederaSDK {
             byte[] tran = tkTransaction.toBytes();
             Transaction t = TokenAssociateTransaction.fromBytes(tran);
             response = (TransactionResponse) t.sign(privateKey2).execute(client);
-            System.out.println(response.getReceipt(client).accountId);
             return response.getReceipt(client);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -87,7 +85,7 @@ public class HederaSDK {
         }
     }
 
-    public static TransactionReceipt signScheduledTransaction(ScheduleId scheduleId, PrivateKey privateKey, Client client) {
+    public static TransactionResponse signScheduledTransaction(ScheduleId scheduleId, PrivateKey privateKey, Client client) {
         //Create the transaction
         try {
             TransactionResponse transaction = new ScheduleSignTransaction()
@@ -95,12 +93,8 @@ public class HederaSDK {
                     .freezeWith(client)
                     .sign(privateKey)
                     .execute(client);
-            return transaction.getReceipt(client);
-        } catch (TimeoutException e) {
-            throw new RuntimeException(e);
-        } catch (PrecheckStatusException e) {
-            throw new RuntimeException(e);
-        } catch (ReceiptStatusException e) {
+            return transaction;
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -115,11 +109,7 @@ public class HederaSDK {
         try {
             txResponse = transaction.execute(client);
             receipt = txResponse.getReceipt(client);
-        } catch (TimeoutException e) {
-            throw new RuntimeException(e);
-        } catch (PrecheckStatusException e) {
-            throw new RuntimeException(e);
-        } catch (ReceiptStatusException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -194,11 +184,7 @@ public class HederaSDK {
         try {
             response = tkgTransaction.freezeWith(client).sign(privateKey).execute(client);
             return response.getReceipt(client);
-        } catch (TimeoutException e) {
-            throw new RuntimeException(e);
-        } catch (PrecheckStatusException e) {
-            throw new RuntimeException(e);
-        } catch (ReceiptStatusException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -209,9 +195,7 @@ public class HederaSDK {
             return  new AccountBalanceQuery()
                     .setAccountId(accountId)
                     .execute(client);
-        } catch (TimeoutException e) {
-            throw new RuntimeException(e);
-        } catch (PrecheckStatusException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -236,9 +220,7 @@ public class HederaSDK {
     public static TransactionResponse executeSwap(TransferTransaction transaction, Client client){
         try {
             return transaction.execute(client);
-        } catch (TimeoutException e) {
-            throw new RuntimeException(e);
-        } catch (PrecheckStatusException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

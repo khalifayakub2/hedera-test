@@ -1,5 +1,7 @@
 import com.hedera.hashgraph.sdk.*;
 
+import java.util.Arrays;
+
 public class TestApproach {
 
     private Client client;
@@ -59,8 +61,7 @@ public class TestApproach {
     private AccountId createAccount(Client client, PrivateKey privateKey, int hbar, String accountFor) {
 
         AccountId account = HederaSDK.createAccount(client, privateKey, hbar);
-        System.out.println(HederaSDK.getAccountBalance(this.client, this.regulator1));
-        System.out.println("Created " + accountFor + "wallet with id: " + this.regulator1.toString());
+        System.out.println("Created " + accountFor + " wallet with id: " + account.toString());
         // save to file and retrieve also
         return account;
     }
@@ -79,8 +80,8 @@ public class TestApproach {
         this.client = HederaSDK.getClient(); // default hedera client
         this.crossborderAccount = this.createAccount(this.client, this.crossborderPrivateKey, 10, "CrossBorder");
         this.crossborderClient = HederaSDK.getDynamicClient(this.crossborderAccount, this.crossborderPrivateKey);
-        this.regulator1 = this.createAccount(this.client, privateKey1, 10, "Regulator A");
-        this.regulator2 =  this.createAccount(this.client, privateKey2, 10, "Regulator B");
+        this.regulator1 = this.createAccount(this.client, privateKey1, 40, "Regulator A");
+        this.regulator2 =  this.createAccount(this.client, privateKey2, 40, "Regulator B");
         this.regulatorClient1 = HederaSDK.getDynamicClient(this.regulator1, this.privateKey1);
         this.regulatorClient2 = HederaSDK.getDynamicClient(this.regulator2, this.privateKey2);
         this.fsp1 = this.createAccount(this.regulatorClient1, privateKey3, 1, "FSP A");
@@ -92,7 +93,7 @@ public class TestApproach {
     }
     private TokenId tokenCreation(Client client, PrivateKey privateKey, String symbol, AccountId account){
         TokenId token = HederaSDK.createToken(client, privateKey, symbol, account);
-        System.out.println("Created new Token with ID: " + this.token1.toString());
+        System.out.println("Created new Token with ID: " + token.toString());
         // save to file and restore tokens
         return token;
     }
@@ -124,22 +125,26 @@ public class TestApproach {
     private void printBeforeBalance(){
         System.out.println("################ Balance BEfore Transactions ##################");
         System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
+        System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token2));
         System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
+        System.out.println("BALANCE FOR End User A:" + printBalance(this.regulatorClient1, this.endUserWallet1, this.token1));
         System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
         System.out.println("################ Balance BEfore Transactions ##################");
     }
     private void printAfterBalance(){
-        System.out.println("################ Balance BEfore Transactions ##################");
+        System.out.println("################ Balance After Transactions ##################");
         System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
+        System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token2));
         System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
+        System.out.println("BALANCE FOR End User A:" + printBalance(this.regulatorClient1, this.endUserWallet1, this.token1));
         System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
-        System.out.println("################ Balance BEfore Transactions ##################");
+        System.out.println("################ Balance After Transactions ##################");
     }
 
     private void transferAndPrint(TokenId token, AccountId sourceAccount, AccountId destinationAccount, long amount, PrivateKey privateKey, Client client){
         TransactionResponse response = HederaSDK.transfer(token, sourceAccount, destinationAccount, amount, privateKey, client);
         System.out.println("####################################################################################");
-        System.out.println("Transaction ID: " + response.transactionId + "Transaction Hash: " + response.transactionHash);
+        System.out.println("Transaction ID: " + response.transactionId + " Transaction Hash: " + Arrays.toString(response.transactionHash));
         System.out.println("Transferred " + amount + " from Wallet: " + sourceAccount.toString() + " to FSP B: " + destinationAccount.toString() + " on token: " + this.token1.toString());
         System.out.println("####################################################################################");
     }
@@ -165,10 +170,10 @@ public class TestApproach {
     private void doTransfer(){
         // exhange rate to user
         // exchange rate to fsp B
-        final Double exchangeRateToUser = 6.5;
-        final Double exchangeRateToFsp = 5.3;
+        final Double exchangeRateToUser = 0.5;
+        final Double exchangeRateToFsp = 0.38;
         // amount user B want to transfer
-        final Long amount = 100L; // cedis to send
+        final Long amount = 5L; // cedis to send
         final Long amountForUser = (long) (amount * exchangeRateToUser); // cedis to send
         final Long amountForFSP = (long) (amount * exchangeRateToFsp); // cedis to send
         // create scheduled transfer from End User B to FSP B
@@ -183,23 +188,12 @@ public class TestApproach {
     }
 
     private void signTransactions(){
-        System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
-        System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
-        System.out.println("BALANCE FOR End User A:" + printBalance(this.regulatorClient1, this.endUserWallet1, this.token1));
-        System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
-        System.out.println("BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token2));
+        printBeforeBalance();
         HederaSDK.signScheduledTransaction(this.transaction1, this.privateKey6, this.regulatorClient2);
         HederaSDK.signScheduledTransaction(this.transaction2, this.privateKey4, this.regulatorClient2);
         HederaSDK.signScheduledTransaction(this.transaction3, this.privateKey3, this.regulatorClient1);
         System.out.println("####################################################################################");
-        System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
-        System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
-        System.out.println("BALANCE FOR End User A:" + printBalance(this.regulatorClient1, this.endUserWallet1, this.token1));
-        System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
-        System.out.println("BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token2));
-//        HederaSDK.executeTransaction(this.crossborderClient, this.transaction1);
-//        HederaSDK.executeTransaction(this.crossborderClient, this.transaction2);
-//        HederaSDK.executeTransaction(this.crossborderClient, this.transaction3);
+        printAfterBalance();
     }
 
 }
