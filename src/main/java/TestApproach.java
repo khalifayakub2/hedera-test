@@ -90,13 +90,17 @@ public class TestApproach {
         System.out.println("####################################################################################");
 
     }
+    private TokenId tokenCreation(Client client, PrivateKey privateKey, String symbol, AccountId account){
+        TokenId token = HederaSDK.createToken(client, privateKey, symbol, account);
+        System.out.println("Created new Token with ID: " + this.token1.toString());
+        // save to file and restore tokens
+        return token;
+    }
 
     private void initializeTokens() {
         System.out.println("####################################################################################");
-        this.token1 = HederaSDK.createToken(this.regulatorClient1, privateKey1, "CEDIS", this.regulator1);
-        System.out.println("Created new Token with ID: " + this.token1.toString());
-        this.token2 = HederaSDK.createToken(this.regulatorClient2, privateKey2, "NAIRA", this.regulator2);
-        System.out.println("Created new Token 2 with ID: " + this.token2.toString());
+        this.token1 = tokenCreation(regulatorClient1, privateKey1, "CEDIS", regulator1);
+        this.token2 = tokenCreation(regulatorClient2, privateKey2, "NAIRA", regulator2);
         System.out.println("####################################################################################");
     }
 
