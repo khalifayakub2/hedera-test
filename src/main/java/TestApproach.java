@@ -104,19 +104,19 @@ public class TestApproach {
         System.out.println("####################################################################################");
     }
 
+    private void simpleTokenAssociation(Client client, AccountId account, TokenId token, PrivateKey masterKey, PrivateKey subKey){
+        HederaSDK.tokenAssociation(client, account, token, masterKey, subKey);
+        HederaSDK.kycGrant(client, account, token, masterKey);
+
+    }
     private void initializeTokenAssociation(){
 
-        HederaSDK.tokenAssociation(regulatorClient1, this.fsp1, this.token1, privateKey1, privateKey3);
-        HederaSDK.tokenAssociation(regulatorClient1, this.endUserWallet1, this.token1, privateKey1, privateKey5);
-        HederaSDK.kycGrant(regulatorClient1, this.fsp1, this.token1, this.privateKey1);
-        HederaSDK.kycGrant(regulatorClient1, this.endUserWallet1, this.token1, this.privateKey1);
+        simpleTokenAssociation(regulatorClient1, fsp1, token1, privateKey1, privateKey3);
+        simpleTokenAssociation(regulatorClient1, endUserWallet1, token1, privateKey1, privateKey5);
 
-        HederaSDK.tokenAssociation(regulatorClient2, this.fsp1, this.token2, privateKey2, privateKey3);
-        HederaSDK.tokenAssociation(regulatorClient2, this.fsp2, this.token2, privateKey2, privateKey4);
-        HederaSDK.tokenAssociation(regulatorClient2, this.endUserWallet2, this.token2, privateKey2, privateKey6);
-        HederaSDK.kycGrant(regulatorClient2, this.fsp1, this.token2, this.privateKey2);
-        HederaSDK.kycGrant(regulatorClient2, this.fsp2, this.token2, this.privateKey2);
-        HederaSDK.kycGrant(regulatorClient2, this.endUserWallet2, this.token2, this.privateKey2);
+        simpleTokenAssociation(regulatorClient2, fsp1, token2, privateKey2, privateKey3);
+        simpleTokenAssociation(regulatorClient2, fsp2, token2, privateKey2, privateKey4);
+        simpleTokenAssociation(regulatorClient2, endUserWallet2, token2, privateKey2, privateKey6);
 
     }
 
