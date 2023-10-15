@@ -120,41 +120,41 @@ public class TestApproach {
 
     }
 
-    private void transfer(TokenId token, AccountId user1, AccountId user2, long amount, PrivateKey privateKey, Client client){
-        try{
-            TransferTransaction txn = new TransferTransaction()
-                    .addTokenTransfer(token, user1, -amount)
-                    .addTokenTransfer(token, user2, amount);
-            txn.freezeWith(client)
-                    .sign(privateKey)
-                    .execute(client);
 
-        } catch (Exception e){
-            System.out.println(e);
-        }
+    private void printBeforeBalance(){
+        System.out.println("################ Balance BEfore Transactions ##################");
+        System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
+        System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
+        System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
+        System.out.println("################ Balance BEfore Transactions ##################");
+    }
+    private void printAfterBalance(){
+        System.out.println("################ Balance BEfore Transactions ##################");
+        System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
+        System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
+        System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
+        System.out.println("################ Balance BEfore Transactions ##################");
+    }
+
+    private void transferAndPrint(TokenId token, AccountId sourceAccount, AccountId destinationAccount, long amount, PrivateKey privateKey, Client client){
+        TransactionResponse response = HederaSDK.transfer(token, sourceAccount, destinationAccount, amount, privateKey, client);
+        System.out.println("####################################################################################");
+        System.out.println("Transaction ID: " + response.transactionId + "Transaction Hash: " + response.transactionHash);
+        System.out.println("Transferred " + amount + " from Wallet: " + sourceAccount.toString() + " to FSP B: " + destinationAccount.toString() + " on token: " + this.token1.toString());
+        System.out.println("####################################################################################");
     }
 
     private void giveSomeMoneyToFSP(){
         try {
-            long txnAmt = 1000000;
-            long txnAmt2 = 10000;
-            System.out.println("################ Balance BEfore Transactions ##################");
-            System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
-            System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
-            System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
-            System.out.println("################ Balance BEfore Transactions ##################");
+            long txnAmt = 10;
+            long txnAmt2 = 5;
+
             System.out.println("####################################################################################");
-            this.transfer(this.token1, this.regulator1, this.fsp1,txnAmt, this.privateKey1, this.regulatorClient1);
-            this.transfer(this.token2, this.regulator2, this.fsp2,txnAmt, this.privateKey2, this.regulatorClient2);
-            System.out.println("Transferred " + txnAmt + " from regulator A: " + this.regulator1.toString() + " to FSP A: " + this.fsp1.toString() + " on token: " + this.token1.toString());
-            System.out.println("Transferred " + txnAmt + " from regulator B: " + this.regulator2.toString() + " to FSP B: " + this.fsp2.toString() + " on token: " + this.token1.toString());
-            this.transfer(this.token2, this.fsp2, this.endUserWallet2, txnAmt2, this.privateKey4, this.regulatorClient2);
-            System.out.println("Transferred " + txnAmt2 + " from FSP A: " + this.fsp1.toString() + " to END USER A: " + this.endUserWallet1.toString() + " on token: " + this.token1.toString());
-            System.out.println("################ Balance BEfore Transactions ##################");
-            System.out.println( "BALANCE FOR FSP A:" + printBalance(this.regulatorClient1, this.fsp1, this.token1));
-            System.out.println("BALANCE FOR FSP B:" + printBalance(this.regulatorClient2, this.fsp2, this.token2));
-            System.out.println("BALANCE FOR End User B:" + printBalance(this.regulatorClient2, this.endUserWallet2, this.token2));
-            System.out.println("################ Balance BEfore Transactions ##################");
+            printBeforeBalance();
+            transferAndPrint(this.token1, this.regulator1, this.fsp1,txnAmt, this.privateKey1, this.regulatorClient1);
+            transferAndPrint(this.token2, this.regulator2, this.fsp2,txnAmt, this.privateKey2, this.regulatorClient2);
+            HederaSDK.transfer(this.token2, this.fsp2, this.endUserWallet2, txnAmt2, this.privateKey4, this.regulatorClient2);
+            printAfterBalance();
             System.out.println("####################################################################################");
 
         } catch (Exception e){

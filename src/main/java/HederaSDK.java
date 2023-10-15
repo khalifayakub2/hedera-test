@@ -144,6 +144,23 @@ public class HederaSDK {
         }
     }
 
+    public static TransactionResponse transfer(TokenId token, AccountId user1, AccountId user2, long amount, PrivateKey privateKey, Client client){
+        try{
+            TransferTransaction txn = new TransferTransaction()
+                    .addTokenTransfer(token, user1, -amount)
+                    .addTokenTransfer(token, user2, amount);
+            TransactionResponse response = txn.freezeWith(client)
+                    .sign(privateKey)
+                    .execute(client);
+
+            return response;
+        } catch (Exception e){
+            System.out.println(e);
+        }
+
+        return null;
+    }
+
     public static TokenId createToken(Client client, PrivateKey privateKey, String symbol, AccountId account) {
         TransactionResponse response = null;
         try {
@@ -153,7 +170,7 @@ public class HederaSDK {
                     .setTokenName(symbol + "MMMM")
                     .setTokenSymbol(symbol)
                     .setDecimals(2)
-                    .setInitialSupply(1000000000)
+                    .setInitialSupply(20)
                     .setTreasuryAccountId(account)
                     .setAdminKey(key)
                     .setFreezeKey(key)
