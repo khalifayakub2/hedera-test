@@ -31,21 +31,26 @@ public class TestApproach {
 
 
     public void run(){
+        this.client = HederaSDK.getClient(); // default hedera client
+
         this.initializeWallets();
         this.initializeTokens();
         this.initializeTokenAssociation();
         this.giveSomeMoneyToFSP();
         this.doTransfer();
-        try {
-            System.out.println("CURRENTLY SLEEEPINNGGGG TO SIMULATE A PAUSEEEEEE");
-            Thread.sleep(10000);
-            System.out.println("DONE SLEEPING. GO SIGN GO");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        this.sleep(10000);
         this.signTransactions();
     }
 
+    private void sleep(int time){
+        try {
+            System.out.println("CURRENTLY SLEEEPINNGGGG");
+            Thread.sleep(time);
+            System.out.println("DONE SLEEPING.");
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private static String printBalance(Client client, AccountId accountId, TokenId tokenId){
         AccountBalance balance = HederaSDK.getAccountBalance(client, accountId);
         return String.format("The balance for account: %s with tokenId: %s is %s", accountId.toString(), tokenId.toString(),balance.tokens.get(tokenId));
@@ -75,7 +80,6 @@ public class TestApproach {
         this.privateKey5 = generateKey();
         this.privateKey6 = generateKey();
         this.crossborderPrivateKey = generateKey();
-
         System.out.println("####################################################################################");
         this.client = HederaSDK.getClient(); // default hedera client
         this.crossborderAccount = this.createAccount(this.client, this.crossborderPrivateKey, 10, "CrossBorder");
@@ -98,6 +102,15 @@ public class TestApproach {
         return token;
     }
 
+    private void scheduleClear(){
+        ScheduleId scheduleId1 = ScheduleId.fromString("0.0.2143");
+        ScheduleId scheduleId2 = ScheduleId.fromString("0.0.2144");
+        ScheduleId scheduleId3 = ScheduleId.fromString("0.0.2145");
+
+        HederaSDK.getInfo(scheduleId1, client);
+        HederaSDK.getInfo(scheduleId2, client);
+        HederaSDK.getInfo(scheduleId3, client);
+    }
     private void initializeTokens() {
         System.out.println("####################################################################################");
         this.token1 = tokenCreation(regulatorClient1, privateKey1, "CEDIS", regulator1);
@@ -158,7 +171,8 @@ public class TestApproach {
             printBeforeBalance();
             transferAndPrint(this.token1, this.regulator1, this.fsp1,txnAmt, this.privateKey1, this.regulatorClient1);
             transferAndPrint(this.token2, this.regulator2, this.fsp2,txnAmt, this.privateKey2, this.regulatorClient2);
-            HederaSDK.transfer(this.token2, this.fsp2, this.endUserWallet2, txnAmt2, this.privateKey4, this.regulatorClient2);
+            transferAndPrint(this.token2, this.fsp2, this.endUserWallet2, txnAmt2, this.privateKey4, this.regulatorClient2);
+            this.sleep(10000);
             printAfterBalance();
             System.out.println("####################################################################################");
 
@@ -192,7 +206,8 @@ public class TestApproach {
         HederaSDK.signScheduledTransaction(this.transaction1, this.privateKey6, this.regulatorClient2);
         HederaSDK.signScheduledTransaction(this.transaction2, this.privateKey4, this.regulatorClient2);
         HederaSDK.signScheduledTransaction(this.transaction3, this.privateKey3, this.regulatorClient1);
-        System.out.println("####################################################################################");
+        this.sleep(10000);
+
         printAfterBalance();
     }
 
